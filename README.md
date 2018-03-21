@@ -16,7 +16,7 @@ Usage
 -----
 
 ```sh
-docker run -v /tmp/apcupsd-docker:/tmp/apcupsd-docker gersilex/apcupsd-docker
+docker run -t -v /tmp/apcupsd-docker:/tmp/apcupsd-docker gersilex/apcupsd-docker
 ```
 
 You can read the status from the stdout output, as the container starts `apcupsd -b` and shows INFO loglevel information.
@@ -72,6 +72,18 @@ action(){
 
 * * * * * /root/apcupsd/host-trigger-check.sh
 ```
+
+FAQ
+---
+
+Q: I can't see any log output.
+A: Allocate a tty (with `docker run -t`). Apcupsd only shows output to ttys.
+
+Q: I only see `NIS server startup succeeded`
+A: If there is no new log line after 60 seconds, it probably is just fine. apcupsd does not log successful connections. Use `apcaccess` to be sure:
+
+Q: How to see if it works?
+A: Run `docker exec -it <container-name> apcaccess` and watch the output.
 
 License
 -------
