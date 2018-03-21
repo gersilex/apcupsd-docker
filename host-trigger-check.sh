@@ -12,8 +12,8 @@ TRIGGERFILE="/tmp/apcupsd-docker/trigger"
 action(){
   echo "Detected '1' in '$TRIGGERFILE'."
 
-  # Plan shutdown in 5 minutes
-  shutdown -P +5
+  # Plan shutdown in 5 minutes, if supported by shutdown script
+  shutdown -P +5 || true
 
   echo "Stopping all Docker containers..."
   docker ps -q | xargs --no-run-if-empty docker stop --time 300
