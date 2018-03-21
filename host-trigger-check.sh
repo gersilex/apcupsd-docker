@@ -16,7 +16,7 @@ action(){
   shutdown -P +5
 
   echo "Stopping all Docker containers..."
-  docker -q | xargs --no-run-if-empty docker stop --time 300
+  docker ps -q | xargs --no-run-if-empty docker stop --time 300
 
   # Shutdown now, if we finish early with previous command
   shutdown -P now
