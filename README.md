@@ -15,8 +15,25 @@ Requirements
 Usage
 -----
 
+With default example settings:
+
 ```sh
 docker run -t -v /tmp/apcupsd-docker:/tmp/apcupsd-docker gersilex/apcupsd-docker
+```
+
+With custom settings:
+
+- Copy `apcupsd.conf` and make your changes
+- Repeat with `doshutdown` and/or `host-trigger-check.sh`
+- Run the container and map the files into the container to override the default settings:
+
+```sh
+docker run -t \
+  -v /tmp/apcupsd-docker:/tmp/apcupsd-docker \
+  -v /path/to/your/apcupsd.conf:/etc/apcupsd/apcupsd.conf \
+  -v /path/to/your/doshutdown:/etc/apcupsd/doshutdown \
+  -v /path/to/your/host-trigger-check.sh:/root/apcupsd/host-trigger-check.sh \
+  gersilex/apcupsd-docker
 ```
 
 You can read the status from the stdout output, as the container starts `apcupsd -b` and shows INFO loglevel information.
