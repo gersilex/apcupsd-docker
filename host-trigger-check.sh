@@ -5,7 +5,7 @@
 # Please change the content of the TRIGGERFILE variable and the action() function according to your needs. This has to be run on the host, not within a container, to be able to shut the machine down.
 
 # Path of the file that get's created in the folder that you mapped into the apcupsd docker container
-#   Example: docker run -d -v /tmp/apcupsd-docker/trigger:/tmp/apcupsd-docker/trigger gersilex/apcupsd
+#   Example: docker run -d -v /tmp/apcupsd-docker:/tmp/apcupsd-docker gersilex/apcupsd
 TRIGGERFILE="/tmp/apcupsd-docker/trigger"
 
 # Put everything you want to do on a shutdown condition instide this function.
