@@ -40,7 +40,7 @@ You can read the status from the stdout output, as the container starts `apcupsd
 
 The `/etc/apcupsd/doshutdown` script will be executed when a condition (Low Battery, Low Lifetime left, Timeout exceeded) is reached while being in battery operation (See `/etc/apcupsd/apcupsd.conf` for more information and tweaking).
 
-To be able do signal the Docker host on which the container runs, you should either map your local device into the container (if the UPS is connected to this host) or map a folder from your host into the container and use the included `doshutdown` script. The script will write a `1` into a file with the name `trigger` in that folder. Monitor it on the host with cron or inotify and gracefully shut down your server, when the content is `1`.
+To be able to signal the Docker host on which the container runs, you should either map your local device into the container (if the UPS is connected to this host) or map a folder from your host into the container and use the included `doshutdown` script. The script will write a `1` into a file with the name `trigger` in that folder. Monitor it on the host with cron or inotify and gracefully shut down your server, when the content is `1`.
 Don't forget to remove the file before shutdown to omit shutdown-loops after booting again.
 
 The `host-trigger-check.sh` contains a cron-compatible script that will run an included bash function, if it reads a '1' in the `/tmp/apcupsd-docker/trigger` file on the host. Read the shell script for instructions on how to use it. It's recommended to run this every minute.
