@@ -1,32 +1,50 @@
 #!/bin/bash -e
 #
 # This script is part of apcupsd-docker by Leroy Foerster.
-# It is designed to be run by regularly (e.g. by cron). If it reads a first line '1' in the TRIGGERFILE, it will run the 'action()' function and replace the '1' with a '0'.
-# Please change the content of the TRIGGERFILE variable and the action() function according to your needs. This has to be run on the host, not within a container, to be able to shut the machine down.
 
-# Path of the file that get's created in the folder that you mapped into the apcupsd docker container
-#   Example: docker run -d -v /tmp/apcupsd-docker:/tmp/apcupsd-docker gersilex/apcupsd
-TRIGGERFILE="/tmp/apcupsd-docker/trigger"
-
-# Put everything you want to do on a shutdown condition instide this function.
+### custumize your action in a script with the same name of the action
 action(){
-  echo "Detected '1' in '$TRIGGERFILE'."
-
-  # Plan shutdown in 5 minutes, if supported by shutdown script
-  shutdown -P +5 || true
-
-  echo "Stopping all Docker containers..."
-  docker ps -q | xargs --no-run-if-empty docker stop --time 300
-
-  # Shutdown now, if we finish early with previous command
-  shutdown -P now
+  if [[ -f ${APC_SCR_DIR}/${2} ]]; then
+    cd $APC_SCR_DIR
+    ./${2}
+  fi
 }
 
 ### Do not change below. Except you know what you are doing ###
-if [ -e "$TRIGGERFILE" ]; then
-  read first_line < $TRIGGERFILE
-  if [ "$first_line" == "1" ]; then
-    echo "0" > $TRIGGERFILE
-    action;
-  fi
+set -x
+source env.list 
+
+if [[ "$1" == "stop" ]]; then
+  echo "quit" | timeout -k 0 1 nc ${DOCKER0_IP} ${DOCKER0_PORT}
+  exit 0
 fi
+
+if [[ "$1" == "status" ]]; then
+  if ps -ef | grep ${DOCKER0_PORT} | grep "nc" | grep -v "grep" > /dev/null; then
+    echo "Service is ON"
+  else
+    echo "Service is OFF"   
+  fi
+  exit 0
+fi
+
+
+while true; do
+  coproc nc -l ${DOCKER0_IP} ${DOCKER0_PORT}
+  IFS="
+"
+  while read -r registry; do
+     P1=$(echo $registry | awk -F' ' '{print $1}')
+     P2=$(echo $registry | awk -F' ' '{print $2}')
+     P3=$(echo $registry | awk -F' ' '{print $3}')
+     P4=$(echo $registry | awk -F' ' '{print $4}')
+     
+     case $registry in
+      ('quit') exit 0;;
+      (*) action $P1 $P2 $P3 $P4;;
+     esac
+  done <&"${COPROC[0]}" 
+
+done
+
+
