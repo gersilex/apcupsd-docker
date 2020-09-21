@@ -6,12 +6,13 @@
 action(){
   APC_EVENT=${1}
   if [[ -f ${APC_SCR_DIR}/${APC_EVENT} ]]; then
-    RET_CODE=$(/bin/bash "${APC_SCR_DIR}/${APC_EVENT}" || echo $?)
+    cd "${APC_SCR_DIR}"
+    ./${APC_EVENT} || RET_CODE=$?
     if [[ ! -z ${RET_CODE} && ! ${RET_CODE} -eq 0 ]]; then
-      echo "[ERROR] host-trigger-check.sh - "$(date +{DATE_MASK})" the apcd hook script for event '${APC_EVENT}' return code '$RET_CODE'"
+      echo "[ERROR] host-trigger-check.sh - "$(date +${DATE_MASK})" the apcd hook script for event '${APC_EVENT}' return code '$RET_CODE'"
     fi 
   else
-    echo "[WARN] host-trigger-check.sh - "$(date +${DATE_MASK})" can't find an hook script for apcd event '${APC_SCR_DIR}\${APC_EVENT}'"
+    echo "[WARN] host-trigger-check.sh - "$(date +${DATE_MASK})" can't find an hook script for apcd event '${APC_SCR_DIR}/${APC_EVENT}'"
   fi
 }
 
@@ -41,7 +42,7 @@ fi
 
 while true; do
   coproc nc -l ${DOCKER0_IP} ${DOCKER0_PORT}
-  IFS="\n"
+  IFS=$'\n'
   read -r APCD_EVENT <&"${COPROC[0]}" 
   kill "$COPROC_PID"
   case $APCD_EVENT in
