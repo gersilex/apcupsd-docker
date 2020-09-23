@@ -16,5 +16,5 @@
 #
 # This script was changed in order to handle apcups via Docker.
 #
-echo "${1}" | timeout -s 0 1 nc $DOCKER0_IP $DOCKER0_PORT
+echo "${1}" >> /tmp/f
 

@@ -4,7 +4,7 @@ cd $(dirname $0)
 
 source env.list
 
-if  [[ "$1" == "stop" ]]; then
+if echo "$1" | grep "stop" > /dev/null; then
   docker stop apcupsd && docker rm apcupsd
   ./host-trigger-check.sh stop
 fi
