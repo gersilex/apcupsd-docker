@@ -1,4 +1,4 @@
-#!/bin/bash -e
+	#!/bin/bash
 #
 # This script is part of apcupsd-docker by Leroy Foerster.
 
@@ -6,10 +6,10 @@
 action(){
   APC_EVENT=${1}
   if [[ -f ${APC_SCR_DIR}/${APC_EVENT} ]]; then
-    cd "${APC_SCR_DIR}"
-    ./${APC_EVENT} || RET_CODE=$?
-    if [[ ! -z ${RET_CODE} && ! ${RET_CODE} -eq 0 ]]; then
-      echo "[ERROR] host-trigger-check.sh - "$(date +"${DATE_MASK}")" - the apcd hook script for event '${APC_EVENT}' return code '$RET_CODE'"
+    SCRIPT_OUTPUT=$("${APC_SCR_DIR}/${APC_EVENT}" 2>&1)
+    SCRIPT_RETURN_CODE=$?
+    if [[ ! -z ${SCRIPT_RETURN_CODE} && ! ${SCRIPT_RETURN_CODE} -eq 0 ]]; then
+      echo "[ERROR] host-trigger-check.sh - "$(date +"${DATE_MASK}")" - the apcd hook script for event '${APC_EVENT}' return code '$SCRIPT_RETURN_CODE'"
     else
       echo "[INFO] host-trigger-check.sh - "$(date +"${DATE_MASK}")" - event apcd hook script '${APC_EVENT}' has been executed successfully"
     fi 
@@ -27,9 +27,7 @@ set +x
 source env.list 
 if [[ "$1" == "stop" ]]; then
   echo "[INFO] host-trigger-check.sh - "$(date +"${DATE_MASK}")" - soft exit requested"
-  while ps -ef | grep host-trigger-check.sh | grep -v grep > /dev/null ; do
-    echo "quit" | timeout -k 0 1 nc ${DOCKER0_IP} ${DOCKER0_PORT}
-  done
+  echo "quit" | nc ${DOCKER0_IP} ${DOCKER0_PORT} &
   exit 0
 fi
 
@@ -49,14 +47,15 @@ fi
 
 trap finish EXIT
 echo "[INFO] host-trigger-check.sh - "$(date +"${DATE_MASK}")" - Starting"
-coproc nc -l ${DOCKER0_IP} ${DOCKER0_PORT}
+coproc APC_NC { nc -l ${DOCKER0_IP} ${DOCKER0_PORT}; }
 IFS=$'\n'
-while read -r APCD_EVENT <&"${COPROC[0]}"; do
+while read -r APCD_EVENT <&"${APC_NC[0]}"; do
     case $APCD_EVENT in
       ('quit') break ;;
       (*) action $APCD_EVENT ;;
     esac 
 done
-kill "$COPROC_PID" 2>&1 1> /dev/null
+kill $APC_NC_PID
+exit 0
 
 
