@@ -1,6 +1,16 @@
 APCUPSd-Docker
 ==============
 
+WARNING
+-------
+
+This Readme is outdated and describes an older version (https://github.com/gersilex/apcupsd-docker/tree/5d45df2bb9c8741c3f06a98a7684e8f0aa2bdcd1 and before).
+
+Please help up updating the Readme which is tracked in https://github.com/gersilex/apcupsd-docker/issues/5
+
+Old Readme Content
+------------------
+
 This Docker container connects to the local APC UPS or a remote apcupsd instance. Even if running in a container it can notify the host and trigger shutdown (or other) actions, if needed. All without special privileges.
 
 It can also be used for any other arbitrary commands and every apcupsd trigger action.
