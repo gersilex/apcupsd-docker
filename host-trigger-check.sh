@@ -1,4 +1,4 @@
-	#!/bin/bash
+#!/bin/bash
 #
 # This script is part of apcupsd-docker by Leroy Foerster.
 
