@@ -28,7 +28,7 @@ Usage
 With default example settings:
 
 ```sh
-docker run -t -v /tmp/apcupsd-docker:/tmp/apcupsd-docker gersilex/apcupsd
+docker run -t -v /tmp/apcupsd-docker:/tmp/apcupsd-docker gersilex/apcupsd:v1.0.0
 ```
 
 With custom settings:
@@ -43,7 +43,7 @@ docker run -t \
   -v /tmp/apcupsd-docker:/tmp/apcupsd-docker \
   -v /path/to/your/apcupsd.conf:/etc/apcupsd/apcupsd.conf \
   -v /path/to/your/doshutdown:/etc/apcupsd/doshutdown \
-  gersilex/apcupsd
+  gersilex/apcupsd:v1.0.0
 ```
 
 You can read the status from the stdout output, as the container starts `apcupsd -b` and shows INFO loglevel information.
