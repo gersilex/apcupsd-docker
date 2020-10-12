@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Copyright (C) 1999-2002 Riccardo Facchetti <riccardo@master.oasi.gpa.it>
+#
+# for apcupsd release 3.14.10 (13 September 2011) - debian
+#
+# platforms/apccontrol.  Generated from apccontrol.in by configure.
+#
+#  Note, this is a generic file that can be used by most
+#   systems. If a particular system needs to have something
+#   special, start with this file, and put a copy in the
+#   platform subdirectory.
+#
+
+
+#
+# This script was changed in order to handle apcups via Docker.
+#
+echo "${1}" >> /tmp/f
+
