@@ -1,0 +1,15 @@
+#!/bin/sh -e
+#
+# Use docker run -v </path/to/tmp/apcupsd-docker/on/host>:/tmp/apcupsd-docker to mount the trigger file folder to your host
+TRIGGERFILE=/tmp/apcupsd-docker/trigger
+
+umask 0000
+[ -d $(dirname $TRIGGERFILE) ] || mkdir -vp $(dirname $TRIGGERFILE)
+
+# Write a '1' into the file when a shutdown condition occurs
+umask 0111
+echo -n "Writing '1' to trigger file '$TRIGGERFILE'... "
+echo "1" > $TRIGGERFILE && echo "OK."
+
+# Nothing else will happen. Check regularly (or subscribe with inotify) for the 1 in that file and shut down if it exists.
+# Do not forget to delete or truncate the file, before shutting down.

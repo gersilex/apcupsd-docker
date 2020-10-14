@@ -1,16 +1,6 @@
 APCUPSd-Docker
 ==============
 
-WARNING
--------
-
-This Readme is outdated and describes an older version (https://github.com/gersilex/apcupsd-docker/tree/5d45df2bb9c8741c3f06a98a7684e8f0aa2bdcd1 and before).
-
-Please help up updating the Readme which is tracked in https://github.com/gersilex/apcupsd-docker/issues/5
-
-Old Readme Content
-------------------
-
 This Docker container connects to the local APC UPS or a remote apcupsd instance. Even if running in a container it can notify the host and trigger shutdown (or other) actions, if needed. All without special privileges.
 
 It can also be used for any other arbitrary commands and every apcupsd trigger action.
@@ -28,7 +18,7 @@ Usage
 With default example settings:
 
 ```sh
-docker run -t -v /tmp/apcupsd-docker:/tmp/apcupsd-docker gersilex/apcupsd:v1.0.0
+docker run -t -v /tmp/apcupsd-docker:/tmp/apcupsd-docker gersilex/apcupsd
 ```
 
 With custom settings:
@@ -43,7 +33,7 @@ docker run -t \
   -v /tmp/apcupsd-docker:/tmp/apcupsd-docker \
   -v /path/to/your/apcupsd.conf:/etc/apcupsd/apcupsd.conf \
   -v /path/to/your/doshutdown:/etc/apcupsd/doshutdown \
-  gersilex/apcupsd:v1.0.0
+  gersilex/apcupsd
 ```
 
 You can read the status from the stdout output, as the container starts `apcupsd -b` and shows INFO loglevel information.

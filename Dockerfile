@@ -1,9 +1,10 @@
 FROM alpine:latest
 
-RUN apk update && apk add --no-cache apcupsd 
-ADD apcupsd.conf /etc/apcupsd/apcupsd.conf
-ADD apccontrol /etc/apcupsd/apccontrol
-ADD entryPoint.sh /entryPoint.sh
+RUN apk update && apk add --no-cache apcupsd
 
-CMD [ "/entryPoint.sh" ]
-EXPOSE 3551/tcp
+ADD apcupsd.conf /etc/apcupsd/apcupsd.conf
+ADD doshutdown /etc/apcupsd/doshutdown
+
+VOLUME [ "/etc/apcupsd", "/var/log/apcupsd" ]
+
+CMD [ "/sbin/apcupsd", "-b" ]
