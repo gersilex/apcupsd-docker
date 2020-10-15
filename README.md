@@ -90,6 +90,13 @@ action(){
 * * * * * /root/apcupsd/host-trigger-check.sh
 ```
 
+Docker Tags
+-----------
+
+`v1` `latest` The latest variant of v1. Intended to never break due to incompatibilities. `latest` is **not** the Git master branch and will not move to a v2 commit.
+
+`v1.0.0` A specific version generated from the Git tag. Intended to never change or get updated.
+
 FAQ
 ---
 
