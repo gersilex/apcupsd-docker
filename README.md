@@ -120,6 +120,14 @@ A: If there is no new log line after 60 seconds, it probably is just fine. apcup
 Q: How to see if it works?
 A: Run `docker exec -it <container-name> apcaccess` and watch the output.
 
+Contributors
+------------
+
+- [Leroy Förster (@gersilex)](https://github.com/gersilex)
+- [Andrew Pearson (@apearson)](https://github.com/apearson)
+- [@cassiorossi](https://github.com/cassiorossi)
+- [Len Kawamoto (@lenkawamoto)](https://github.com/lenkawamoto)
+
 License
 -------
 
