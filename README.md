@@ -97,6 +97,17 @@ Docker Tags
 
 `v1.0.0` A specific version generated from the Git tag. Intended to never change or get updated.
 
+Add-Ons
+----------
+
+### Mail-Wrapper
+
+Len Kawamoto's `mail-wrapper.sh` wraps around the sendmail binary of busybox and exposes an interface similar to the 
+original `mail` binary. `apcupsd` relies on the OS's `mail` command for event notifications, but the
+dockerized system doesn't have it installed.  This results in no mail notifications being delivered to the sysadmin.
+
+See the file [`mail-wrapper.sh`](mail-wrapper.sh) for usage instructions.
+
 FAQ
 ---
 
