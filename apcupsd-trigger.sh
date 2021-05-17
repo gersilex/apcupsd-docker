@@ -1,4 +1,4 @@
-#!/bin/bash -e
+!/bin/bash -e
 #
 # This script is part of apcupsd-docker by Leroy Förster.
 # It is designed to be run by regularly (e.g. by cron). If it reads a first line '1' in the TRIGGERFILE, it will run the 'action()' function and replace the '1' with a '0'.
