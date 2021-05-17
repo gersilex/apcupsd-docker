@@ -1,10 +1,10 @@
 FROM alpine:latest
 
-RUN apk update && apk add --no-cache apcupsd
+RUN apk -U upgrade && apk add --no-cache apcupsd
 
 ADD apcupsd.conf /etc/apcupsd/apcupsd.conf
 ADD doshutdown /etc/apcupsd/doshutdown
+ADD launch.sh /usr/local/bin/
 
-VOLUME [ "/etc/apcupsd", "/var/log/apcupsd" ]
+CMD [ "/usr/local/bin/launch.sh" ]
 
-CMD [ "/sbin/apcupsd", "-b" ]
