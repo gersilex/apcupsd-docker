@@ -1,6 +1,8 @@
 APCUPSd-Docker
 ==============
 
+[![.github/workflows/docker-publish.yml](https://github.com/ValMati/apcupsd-docker/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/ValMati/apcupsd-docker/actions/workflows/docker-publish.yml)
+
 This Docker container connects to the local APC UPS or a remote apcupsd instance. Even if running in a container it can notify the host and trigger shutdown (or other) actions, if needed. All without special privileges.
 
 It can also be used for any other arbitrary commands and every apcupsd trigger action.
