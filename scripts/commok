@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# This shell script if placed in /etc/apcupsd
+# will be called by /etc/apcupsd/apccontrol when apcupsd
+# restores contact with the UPS (i.e. the serial connection is restored).
+#
+
+/etc/apcupsd/send_telegram_message.sh "Communications with UPS $1 restored"
+
+exit 0
