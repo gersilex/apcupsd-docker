@@ -6,7 +6,8 @@ RUN apk add --update apcupsd curl && \
 ADD apcupsd.conf scripts/* /etc/apcupsd/
 ADD launch.sh entrypoint.sh /usr/local/bin/
 
-RUN chmod a+x /etc/apcupsd/send_telegram_message.sh && \
+RUN chmod a+x /etc/apcupsd/health_check.sh && \
+    chmod a+x /etc/apcupsd/send_telegram_message.sh && \
     chmod a+x /etc/apcupsd/changeme && \
     chmod a+x /etc/apcupsd/commfailure &&\
     chmod a+x /etc/apcupsd/commok && \
