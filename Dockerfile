@@ -1,6 +1,6 @@
 FROM alpine:3.14.1
 
-RUN apk add --update apcupsd curl && \
+RUN apk add --update apcupsd curl tzdata && \
     rm -rf /tmp/* /var/cache/apk/*
 
 ADD apcupsd.conf scripts/* /etc/apcupsd/
