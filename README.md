@@ -7,14 +7,12 @@ This Docker container connects to the local APC UPS or a remote apcupsd instance
 It can also be used for any other arbitrary commands and every apcupsd trigger action.
 
 ## Source Code & Image
----
 
 The code is available on [GitHub](https://github.com/ValMati/apcupsd-docker)
 
 With each release a new version of the image is published on [DockerHub](https://hub.docker.com/r/valmati/apcupsd)
 
 ## Usage
----
 
 ### Host
 
@@ -62,7 +60,6 @@ These volumnes can be used to override the default behavior of the image.
 apcupsd needs to access the UPS and for that you need to enable UPS access.
 
 ## Configuration Example
----
 
 An example and default `apcupsd.conf` file is provided, but if you need to change any configuration you can modify this file and mount it as a volume.
 
@@ -78,11 +75,9 @@ MINUTES 10
 ```
 
 ## FAQ
----
 
 Q: I can't see any log output.<br />
 A: Allocate a tty (with `docker run -t`). Apcupsd only shows output to ttys.
 
 Q: I only see `NIS server startup succeeded`<br />
 A: If there is no new log line after 60 seconds, it probably is just fine. apcupsd does not log successful connections. Use `apcaccess` to be sure:
-
