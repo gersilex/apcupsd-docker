@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# This shell script if placed in /etc/apcupsd
+# will be called by /etc/apcupsd/apccontrol when apcupsd
+# loses contact with the UPS (i.e. the serial connection is not responding).
+#
+
+/etc/apcupsd/send_telegram_message.sh "Communications with UPS lost"
+
+exit 0

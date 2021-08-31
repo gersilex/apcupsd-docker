@@ -11,5 +11,7 @@ umask 0111
 echo -n "Writing '1' to trigger file '$TRIGGERFILE'... "
 echo "1" > $TRIGGERFILE && echo "OK."
 
+/etc/apcupsd/send_telegram_message.sh "Machine is going to shutdown..."
+
 # Nothing else will happen. Check regularly (or subscribe with inotify) for the 1 in that file and shut down if it exists.
 # Do not forget to delete or truncate the file, before shutting down.
