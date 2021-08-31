@@ -2,16 +2,11 @@
 
 LOG_FILE='/var/log/apcaccess.log'
 STATUS='STATUS   : '
-ONLINE='ONLINE'
 
 send_telegram_file() {
     BODY=${1}
     FILE=${2}
     HOSTNAME=`hostname`
-
-    if [ -z ${CHAT_ID} ] || [ -z ${BOT_TOKEN} ]; then
-        exit
-    fi
 
     curl -v -4 -F \
         "chat_id=${CHAT_ID}" \
@@ -26,7 +21,7 @@ apcaccess > ${LOG_FILE}
 apcaccess_status=$(grep "${STATUS}" ${LOG_FILE})
 apcaccess_status=${apcaccess_status#"${STATUS}"}
 
-if [ ${apcaccess_status} != ${ONLINE} ]; then
+if [ ! -z ${CHAT_ID} ] && [ ! -z ${BOT_TOKEN} ]; then
     send_telegram_file "apcaccess executed... ${apcaccess_status}" "${LOG_FILE}"
 fi
 
